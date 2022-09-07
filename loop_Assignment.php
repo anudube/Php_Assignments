@@ -6,7 +6,7 @@
  		echo "*";
 
  	}
-echo " ".PHP_EOL;
+       echo " ".PHP_EOL;
 
  	
  }
