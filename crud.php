@@ -1,58 +1,71 @@
 <?php
+//check comment params
 $action = isset($_GET['action']) ? $_GET['action'] : "";
 $user_id = isset($_GET['user_id']) ? $_GET['user_id'] : "";
 
-
+//check value insertion
 var_dump($action.$user_id);
+
+//declare database variables
 $servername = "localhost";
 $username = "root";
 $password= "";
-$db = "TestDB";
+$db = "assignments";
+
+//check connection to database
 $conn = new mysqli($servername, $username, $password, $db);
 if($conn->connect_error){
-die("Connection failed:" .$conn->connect_error);
+    die("Connection failed:" .$conn->connect_error);
 }else{
-echo "Connected Successfully";
+    echo "Connected Successfully";
 }
-// create database Test
-/*$sql = "CREATE DATABASE TestDB";
-if($conn->query($sql) === TRUE){
-echo "Database created Successfully";
-}else{
-echo "Error occurs while creating database:" .$conn->error;
+
+// create database table if not exit
+//$table=  "Select * from users";
+//$checktable =$conn->query($table);
+//if(!$checktable){
+    $sql = "CREATE TABLE IF NOT EXISTS users(
+        id int(7) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        first_name varchar(20) NOT NULL,
+        last_name varchar(20) ,
+        email varchar(40) NOT NULL UNIQUE,
+        password varchar(20) NOT NULL,
+        photo varchar(50) NOT NULL,
+        reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON update CURRENT_TIMESTAMP
+        )";
+    if($conn->query($sql) === TRUE){
+        echo "Table create Successfully";
+    }else{
+        echo "Error occurs while creating Table:" .$conn->error; 
+    } 
+//}
+/*else{
+    echo "Table exits already";
 }*/
 
-// create table Users
-/*$sql = "CREATE TABLE Users_form(
-id int(7) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-firstname varchar(20) NOT NULL,
-lastname varchar(20) ,
-email varchar(40) NOT NULL,
-password varchar(20) NOT NULL,
-photo varchar(50) NOT NULL,
-reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON update CURRENT_TIMESTAMP
-)";
-if($conn->query($sql) === TRUE){
-echo "Table create Successfully";
-}else{
-echo "Error occurs while creating Table:" .$conn->error; 
-}*/
-// insert values
-/*$sql = "INSERT INTO Users_form (firstname, lastname, email, password, photo)
-values ('Anu','Dubey','anu.dubey@gmail.com','1234','abc.jpg')";
-if($conn->query($sql) === TRUE){
-echo "New record inserted Successfully";
-}else{
-echo "Error:" .$sql. ",<br>" .$conn->error;
-}*/
-///////////////// insert data from SignUp_form to database
+//check action
+switch($action){
 
+    case 'update':
+        update();
+        break;
 
-////////////////// fetching data from database 
+     case 'delete':
+        delete();
+        break;  
+        
+     case 'details':
+        details();
+        break;   
+}
 
-if($action==='update' ){
-    ////////////////// update
-    $sql = "UPDATE Users_form SET lastname = '' WHERE id = $user_id";
+// update function
+function update(){
+    //$user_id = $GLOBALS['user_id'];
+    //$conn= $GLOBALS['conn'];
+    global $user_id;
+    global $conn;
+    $sql = "UPDATE users SET last_name = '' WHERE id = $user_id";
     if($conn->query($sql)=== TRUE){
         echo " record updated successfully";
     }
@@ -60,9 +73,11 @@ if($action==='update' ){
         echo "Error updating record:" .$conn->error;
     }
 }
-    //////////////// delete
-    if($action ==='delete'){
-    $sql = "DELETE FROM Users_form WHERE ID = $user_id";
+// delete function
+function delete(){
+    $user_id = $GLOBALS['user_id'];
+    $conn= $GLOBALS['conn'];
+    $sql = "DELETE FROM users WHERE ID = $user_id";
     if($conn->query($sql)=== TRUE){
         echo " record deleted successfully";
     }
@@ -70,25 +85,25 @@ if($action==='update' ){
         echo "Error deleting record:" .$conn->error;
     }
 }
-if($action ==='list'){
-    $sql = "select id ,firstname,lastname,email from Users_form";
+// fetching list of data
+function details(){
+    $user_id = $GLOBALS['user_id'];
+    $conn= $GLOBALS['conn'];
+    $sql = "select id ,first_name,last_name,email from users";
 // fetching data from database
-$result = mysqli_query($conn, $sql);
-$num  =  mysqli_num_rows($result);
-if($num>0){
-  // output data of each rows
-    while($rows =mysqli_fetch_assoc($result)){
-    //echo var_dump($rows);
-    echo "Name: ". $rows["firstname"]. " " . $rows["lastname"].PHP_EOL ."Email:" .$rows["email"]. "<br>";
-    echo "<br>";
-
-    } 
-}else{
-    echo "0 results";
+    $result = mysqli_query($conn, $sql);
+    $num  =  mysqli_num_rows($result);
+    if($num>0){  
+// output data of each rows
+        while($rows =mysqli_fetch_assoc($result)){
+        //echo var_dump($rows);
+        echo "Name: ". $rows["first_name"]. " " . $rows["last_name"].PHP_EOL ."Email:" .$rows["email"]. "<br>";
+        echo "<br>";
+        } 
+    }else{
+        echo "0 results";
+    }
 }
-
-}
-
 $conn->close();
 
 ?>

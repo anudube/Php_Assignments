@@ -1,135 +1,144 @@
-<?php
-if(empty($_POST)) {
-echo '<form method="post" action="" enctype="multipart/form-data">
-
-<input type="hidden" name="sign_Up_form" value="assignment1234">
-
-<label for="firstname"><b>FirstName</label>
-<input type="text" name="firstname" value=""><br>
-
-<label for="lastname"><b>LastName</label>
-<input type="text" name="lastname" value=""><br>
-
-<label for="email"><b>Email</b></label>
-<input type="email" name="email" value=""><br>
-
-<label for="password"><b>Password</b></label>
-<input type="password" name="password" value=""><br>
-
-<label for="repeat_psw"><b>Confirm Password</b></label>
-<input type="password" name="repeat_psw" value=""><br>
-
-<label for="photo"><b>Photo</b></label>
-<input type="file" name="photo"><br>
-<button type="submit" name="SignUp">Sign Up
-</button>
-</form>';
-
-  $servername = "localhost";
-  $username = "root";
-  $password= "";
-  $db = "TestDB";
-  // create connection
-  $conn = new mysqli($servername, $username, $password, $db);
-  // get connection error
-if($conn->connect_error){
- die("Connection failed:" .$conn->connect_error);
- }else{
-   echo "Connected Successfully";
-}
-// sql query
-$sql = "select id ,firstname,lastname,email from Users_form";
-// fetching data from database
-$result = mysqli_query($conn, $sql);
-$num  =  mysqli_num_rows($result);
-if($num>0){
-  // output data of each rows
-    while($rows =mysqli_fetch_assoc($result)){
-    //echo var_dump($rows);
-    echo "Name: ". $rows["firstname"]. " " . $rows["lastname"].PHP_EOL ."Email:" .$rows["email"]. "<br>";
-    echo "<br>";
-
-    } 
-}else{
-    echo "0 results";
-}
-
-
-}
-else{
-//print_r($_POST);
-//var_dump($_POST);
-//var_dump($_FILES);
-
-if(!empty($_POST['sign_Up_form']) && $_POST['sign_Up_form'] === 'assignment1234') {
-
-$firstname = $_POST['firstname'];
-$lastname = $_POST['lastname'];
-$email = $_POST['email'];
-$password = $_POST['password'];
-$confirm_password = $_POST['repeat_psw'];
-$photo = $_FILES['photo']['name'];
-
-$is_valid_email = filter_var($email,FILTER_VALIDATE_EMAIL);
+<html>
+  <head>
+    <link rel="Stylesheet" type="text/css" href="style.css">
+</head>
   
-if(empty($firstname)) {
-    echo "First Name should not be empty";
+<?php 
+  if(empty($_POST)) {
+    
+    echo '<form method="post" action="" enctype="multipart/form-data">
+  
+    <input type="hidden" name="sign_Up_form" value="assignment1234">
+    <div class="container">
+    <div class="title">
+      SignUp Form
+    </div>
+
+    <div class="form">
+    <div class="input_field">
+    <label for="firstname"><b>FirstName</b></label>
+    <input type="text" name="firstname" value="" class="input"><br>
+    </div>
+
+    <div class="input_field">
+    <label for="lastname"><b>LastName</b></label>
+    <input type="text" name="lastname" value="" class="input"><br>
+    </div>
+
+    <div class="input_field">
+    <label for="email"><b>Email</b></label>
+    <input type="email" name="email" value="" class="input"><br>
+    </div>
+
+    <div class="input_field">
+    <label for="password"><b>Password</b></label>
+    <input type="password" name="password" value="" class="input"><br>
+    </div>
+
+    <div class="input_field">
+    <label for="repeat_psw"><b>Confirm Password</b></label>
+    <input type="password" name="repeat_psw" value="" class="input"><br>
+    </div>
+
+    <div class="input_field">
+    <label for="photo"><b>Photo</b></label>
+    <div class="file">
+    <input type="file" name="photo" class="input"><br>
+    </div>
+    </div>
+   
+    <div class="input_field">
+    <button type="submit" name="SignUp" class="btn">Sign Up
+    </button>
+    </div>
+    </div>
+    </div>
+    </form>';
   }
+else{
+  if(!empty($_POST['sign_Up_form']) && $_POST['sign_Up_form'] === 'assignment1234') {
+      $first_name = $_POST['firstname'];
+      $last_name = $_POST['lastname'];
+      $email = $_POST['email'];
+      //print_r($email);
+      $pwd = $_POST['password'];
+      $password=md5($pwd);
+      //print_r($pwd);
+      $confirm_pwd = $_POST['repeat_psw'];
+      $confirm_password= md5($confirm_pwd);
+      $photo = $_FILES['photo']['name'];
+$error = FALSE;
+// validate the form
+    $is_valid_email = filter_var($email,FILTER_VALIDATE_EMAIL);
+    if(empty($first_name)) {
+     echo "First Name should not be empty";
+     $error= TRUE;
+    }
+      if(empty($email)) {
+        echo "Email should not be empty";
+        $error= TRUE;
+      }
 
+        if($is_valid_email === false) {
+          echo "Email should be Valid ";
+          $error= TRUE;
+        }
 
-if(empty($email)) {
-    echo "Email should not be empty";
-  }
+          if(empty($pwd) && empty($confirm_pwd)) {
+            echo "Password & confirm Password should not be empty";
+            $error= TRUE;
+          }
 
-if($is_valid_email === false) {
-    echo "Email should be Valid ";
-  }
+            if($pwd !== $confirm_pwd) {
+              echo "Password & confirm password should be same";
+              $error= TRUE;
+            }
 
-if(empty($password) && empty($confirm_password)) {
-    echo "Password & confirm Password should not be empty";
-  }
-
-if($password !== $confirm_password) {
-  echo "Password & confirm password should be same";
-  }
-
-if(empty($photo)) {
-  echo "Photo should not be empty";
-  }
-
+              if(empty($photo)) {
+                echo "Photo should not be empty";
+                $error= TRUE;
+               }
 } 
-if(!empty($firstname)  && !empty($email) && !empty($password)  && !empty($confirm_password) && !empty($photo) && $password == $confirm_password){
+if($error!==TRUE){
   $servername = "localhost";
   $username = "root";
   $password= "";
-  $db = "TestDB";
-  // create connection
+  $db = "assignments";
+// create connection
   $conn = new mysqli($servername, $username, $password, $db);
-  // get connection error
-if($conn->connect_error){
- die("Connection failed:" .$conn->connect_error);
-  }else{
-   echo "Connected Successfully";
-}
-  if(isset($_POST['SignUp'])){
-    $firstname = $_POST['firstname'];
-    $lastname = $_POST['lastname'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $photo = $_FILES['photo']['name'];
-    
-    
-    //print_r($_POST);
-    // insert query
-    $insert = "INSERT INTO Users_form (firstname, lastname, email, password, photo)
-    VALUES ('$firstname', '$lastname', '$email', '$password', '$photo')";
-    if($conn->query($insert) === TRUE){
-    echo "Data stored in a database successfully";
+  
+// get connection error
+    if($conn->connect_error){
+      die("Connection failed:" .$conn->connect_error);
     }else{
-    echo "Error:" .$sql. ",<br>" .$conn->error;
+      echo "Connected Successfully";
     }
-   }
+if(isset($_POST['SignUp'])){
+    $first_name = $_POST['firstname'];
+    $last_name = $_POST['lastname'];
+    $email = $_POST['email'];
+    $pass = $_POST['password'];
+    $password= md5($pass);
+    $photo = $_FILES['photo']['name'];
+
+//check if email is already exits
+    $query = mysqli_query($conn, "select * from users where email='$email'");
+    if(mysqli_num_rows($query)>0){
+        echo "Email already use";
+    }
+    else{
+// insert query
+    $insert = "INSERT INTO users(first_name, last_name, email, password, photo)
+    VALUES ('$first_name', '$last_name', '$email', '$password', '$photo')";
+        if($conn->query($insert) === TRUE){
+          echo "Data stored in a database successfully";
+        }else{
+          echo "Error:" .$sql. ",<br>" .$conn->error;
+        }
+      }
 }
-  }
+} 
+}
 
 ?>
+</html>
