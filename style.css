@@ -60,11 +60,12 @@ body{
     background: aqua;
 
 }
-.container .form .input_field .input .error{
-    text-align: center;
+.container .form .input_field .error{
     color: red;
-    display: none;
-    padding-bottom: 10px;
+    
+    
+    
+    
 }
 
 
