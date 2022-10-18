@@ -32,7 +32,7 @@
                 if($conn->connect_error){
                  die("Connection failed:" .$conn->connect_error);
                 }else{
-                 echo "Connected Successfully";
+                // echo "Connected Successfully";
                  }
                 $selectquery = "select * from users";
                 $query = mysqli_query($conn,$selectquery);
@@ -45,8 +45,8 @@
                         <td><?php echo $res['last_name']; ?></td>
                         <td><?php echo $res['email']; ?></td>
                         <td><?php echo $res['password']; ?></td>
-                        <td><?php echo $res['photo']; ?></td>
-                 </tr>
+                        <td><img src="image_folder/<?php echo $res['photo']; ?>" width="100"></td>
+                    </tr>
                 <?php 
                 }
                  ?>
