@@ -1,0 +1,12 @@
+Hi this is my error message 
+[2022-10-21 08:24:24] Error:This is custom Error message ,File: C:\xampp\htdocs\Php_Assignments\Assignment3\error_log.php , Line :6 
+[2022-10-21 08:24:24] Success:Database is connected ,File: C:\xampp\htdocs\Php_Assignments\Assignment3\error_log.php , Line :8 
+[2022-10-21 08:24:24] INFO:Database table is created 
+[2022-10-21 08:24:24] WARNING:you have a warning in database query insertion ,File: C:\xampp\htdocs\Php_Assignments\Assignment3\error_log.php , Line :12 
+[2022-10-21 08:24:24] Success:Connected Successfully ,File: 3 , Line : 
+Hi this is my error message 
+[2022-10-21 08:45:37] Error:This is custom Error message ,File: C:\xampp\htdocs\Php_Assignments\Assignment3\error_log.php , Line :6 
+[2022-10-21 08:45:37] Success:Database is connected ,File: C:\xampp\htdocs\Php_Assignments\Assignment3\error_log.php , Line :8 
+[2022-10-21 08:45:37] INFO:Database table is created 
+[2022-10-21 08:45:37] WARNING:you have a warning in database query insertion ,File: C:\xampp\htdocs\Php_Assignments\Assignment3\error_log.php , Line :12 
+[2022-10-21 08:45:37] Success:Connected Successfully ,File: 3 , Line : 

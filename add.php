@@ -1,8 +1,13 @@
 <html>
     <head>
         <title>Add Company</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
     </head>
     <body>
+    <div class="container mt-3">
         <a href="index.php">Go to Home</a>
         <br/><br/>
         <form action="add.php" method="post" name="form1">
@@ -19,7 +24,7 @@
 
                 <tr>
                  <td>Email</td>
-                <td><input type="text" name="company_email"></td>
+                <td><input type="email" name="company_email"></td>
                 </tr>
 
                 <tr>
@@ -28,22 +33,41 @@
                 </tr>
             </table>
         </form>
+</div>
 <?php
+ // define variables and set to empty values
+    $nameError= $emailError="";
 
-// check if form submitted, insert form data into company table
+// check if form submitted, insert add form data into company table
 if(isset($_POST['submit'])){
     $company_name = $_POST['company_name'];
     $company_mobile = $_POST['company_mobile'];
     $company_email= $_POST['company_email'];
+    $error=FALSE;
 
+    //validation of form
+    $is_valid_email = filter_var($company_email,FILTER_VALIDATE_EMAIL);
+    if(empty($company_name)) {
+        $nameError= "Enter Valid Name";
+        $error= TRUE;
+      }
+    if(!preg_match("/^[a-zA-Z-' ]*$/",$company_name)){
+        $nameError="Enter Valid Name";
+        $error = TRUE;
+      }
+      if($is_valid_email === false) {
+        $emailError="Email should be Valid ";
+        $error= TRUE;
+      }
+      if($error!==TRUE){
     //include database connection file
     include_once("config.php");
-
+      
     // insert company data into table
     $result=mysqli_query($mysqli,"insert into company(company_name,company_mobile,company_email) values('$company_name', '$company_mobile', '$company_email')");
-
+      }
     // show message when company added
-    echo "Company added successfully.<a href='index.php'>View Companies</a>";
+    echo "Company added successfully.<a href='index.php'>View Companies</a>";  
 }
 ?>
 </body>
