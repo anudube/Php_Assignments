@@ -26,18 +26,28 @@ body{
 .container .form{
     width: 100%;
 }
-.container .form .input_field{
-    margin-bottom: 15px;
-    display: flex;
+.input_field{
+    display:grid;
     align-items: center;
 
 }
-.container .form .input_field label{
-    width: 200px;
-    margin-right: 10px;
-    font-size: 14px;
+.error{
+    color: red;
+    font-size: 15px;
+    line-height: 15px;  
 }
-.container .form .input_field .input{
+input{
+    width: 50%;
+}
+.btn{
+    width: 100%;
+    padding: 8px 10px;
+    font-size: 15px;
+    border: 0;
+    background: aqua;
+
+}
+.input{
     width: 100%;
     outline: none;
     border: 1px solid aqua;
@@ -46,31 +56,7 @@ body{
     border-radius: 3px;
 
 }
-.container .form .input_field .file{
-    position: relative;
-    width: 100%;
-    height: 40px;
 
-}
-.container .form .input_field .btn{
-    width: 100%;
-    padding: 8px 10px;
-    font-size: 15px;
-    border: 0;
-    background: aqua;
-
-}
-.container .form .input_field .error{
-    color: red;
-    display: inline-block;
-    font-size: 12px;
-    line-height: 15px;
-    margin: 5px 0 0;
-    
-    
-    
-    
-}
 
 
 

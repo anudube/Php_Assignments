@@ -14,11 +14,11 @@ $db = "assignments";
 
 //check connection to database
 $conn = new mysqli($servername, $username, $password, $db);
-if($conn->connect_error){
-    die("Connection failed:" .$conn->connect_error);
-}else{
-    echo "Connected Successfully";
-}
+    if($conn->connect_error){
+     die("Connection failed:" .$conn->connect_error);
+    }else{
+     echo "Connected Successfully";
+    }
 
 // create database table if not exit
     $sql = "CREATE TABLE IF NOT EXISTS users(
@@ -72,7 +72,7 @@ function delete(){
     $conn= $GLOBALS['conn'];
     $sql = "DELETE FROM users WHERE ID = $user_id";
     if($conn->query($sql)=== TRUE){
-        echo " record deleted successfully";
+        echo "record deleted successfully";
     }
     else{
         echo "Error deleting record:" .$conn->error;
@@ -83,16 +83,16 @@ function details(){
     $user_id = $GLOBALS['user_id'];
     $conn= $GLOBALS['conn'];
     $sql = "select id ,first_name,last_name,email from users";
+
 // fetching data from database
     $result = mysqli_query($conn, $sql);
     $num  =  mysqli_num_rows($result);
     if($num>0){  
 // output data of each rows
-        while($rows =mysqli_fetch_assoc($result)){
-        //echo var_dump($rows);
-        echo "Name: ". $rows["first_name"]. " " . $rows["last_name"].PHP_EOL ."Email:" .$rows["email"]. "<br>";
+    while($rows =mysqli_fetch_assoc($result)){
+     echo "Name: ". $rows["first_name"]. " " . $rows["last_name"].PHP_EOL ."Email:" .$rows["email"]. "<br>";
         echo "<br>";
-        } 
+    } 
     }else{
         echo "0 results";
     }

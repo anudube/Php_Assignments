@@ -17,17 +17,17 @@ if(isset($_POST['update'])){
 }
 ?>
 <?php
-//getting id from url
-$id = $_GET['id'];
+    //getting id from url
+    $id = $_GET['id'];
 
-//fetch company data based on id
-$result= mysqli_query($mysqli,"select * from company where id= $id");
+    //fetch company data based on id
+    $result= mysqli_query($mysqli,"select * from company where id= $id");
 
-while($company_data= mysqli_fetch_array($result)){
+    while($company_data= mysqli_fetch_array($result)){
     $company_name= $company_data['company_name'];
     $company_mobile= $company_data['company_mobile'];
     $company_email =$company_data['company_email'];
-}
+    }
 ?>
 <html>
  <head>

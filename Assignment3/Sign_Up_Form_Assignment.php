@@ -1,11 +1,9 @@
 <html>
   <head>
-    <link rel="Stylesheet" type="text/css" href="style.css">
+  <link rel="Stylesheet" type="text/css" href="style.css">
   </head>
-
-  <?php
+<?php
   include_once('common.php');
-
     // define variables and set to empty values
     $nameErr= $lnameErr= $emailErr = $emailvalidErr= $pwdErr= $confirm_pwdErr= $photoErr ="";
 
@@ -81,44 +79,40 @@
         $username = "root";
         $dbpassword= "";
         $db = "assignments";
-      // create connection
+        // create connection
         $conn = new mysqli($servername, $username, $dbpassword, $db);
 
       // get connection error
-        if($conn->connect_error){
-         die("Connection failed:" .$conn->connect_error);
-        }else{
-          errorLog("SUCCESS","Connected Successfully",__FILE__,__LINE__);
-        }
+      if($conn->connect_error){
+        die("Connection failed:" .$conn->connect_error);
+      }else{
+        errorLog("SUCCESS","Connected Successfully",__FILE__,__LINE__);
+      }
             
-        //check if email is already exits
-        $query = mysqli_query($conn, "select * from users where email='$email'");
-          if(mysqli_num_rows($query)>0){
-            //echo "Email already use";
-            errorLog("SUCCESS","Email already use",__FILE__,__LINE__);
-          } 
-          else{
-print_r($password);
-         // insert query
+      //check if email is already exits
+      $query = mysqli_query($conn, "select * from users where email='$email'");
+        if(mysqli_num_rows($query)>0){
+          //echo "Email already use";
+          errorLog("SUCCESS","Email already use",__FILE__,__LINE__);
+        } 
+        else{
+        // insert query
         $insert = "INSERT INTO users(first_name, last_name, email, password, photo)
         VALUES ('$first_name', '$last_name', '$email', '$password', '$photo')";
-        //print_r($photo);
-          if($conn->query($insert) === TRUE){
-             errorLog("SUCCESS","Sign Up Successfully",__FILE__,__LINE__);
-          }else{
-            echo "Error:" .$sql. ",<br>" .$conn->error;
-          }
-           
+        if($conn->query($insert) === TRUE){
+          errorLog("SUCCESS","Sign Up Successfully",__FILE__,__LINE__);
+        }else{
+          echo "Error:" .$sql. ",<br>" .$conn->error;
+        }
         } 
-      
-} 
-}   
-}
+      }
+     } 
+    }
 if(isset($hide)==1){
-    echo "Sign Up sucsessfully!!";
+   echo "Sign Up sucsessfully!!";
 }
 else{
-echo '<form method="post" action="" enctype="multipart/form-data">
+  echo '<form method="post" action="" enctype="multipart/form-data">
   
 <input type="hidden" name="sign_Up_form" value="assignment1234">
 <div class="container">
@@ -129,32 +123,31 @@ echo '<form method="post" action="" enctype="multipart/form-data">
 <div class="form">
 <div class="input_field">
 <label for="firstname"><b>First Name *</b></label>
-<input type="text" name="firstname" value="" class="input"><br>
+<input type="text" name="firstname" value="" class="input">
 <span class="error">'.$nameErr.'</span>
 </div>
 
-
 <div class="input_field">
 <label for="lastname"><b>Last Name</b></label>
-<input type="text" name="lastname" value="" class="input"><br>
+<input type="text" name="lastname" value="" class="input">
 <span class="error">'.$lnameErr.'</span>
 </div>
 
 <div class="input_field">
 <label for="email"><b>Email *</b></label>
-<input type="email" name="email" value="" class="input"><br>
+<input type="email" name="email" value="" class="input">
 <span class="error">'.$emailErr.'</span>
 </div>
 
 <div class="input_field">
 <label for="password"><b>Password*</b></label>
-<input type="password" name="password" value="" class="input"><br>
+<input type="password" name="password" value="" class="input">
 <span class="error">'.$pwdErr.'</span>
 </div>
 
 <div class="input_field">
-<label for="repeat_psw"><b>Confirm Password *</b></label>
-<input type="password" name="repeat_psw" value="" class="input"><br>
+<label for="repeat_psw"><b>Confirm Password</b></label>
+<input type="password" name="repeat_psw" value="" class="input">
 <span class="error">'.$confirm_pwdErr.'</span>
 </div>
 
@@ -162,14 +155,12 @@ echo '<form method="post" action="" enctype="multipart/form-data">
 <label for="photo"><b>Photo *</b></label>
 <div class="file">
 <input type="file" name="photo" class="input"><br>
-<span class="error">'.$photoErr.'</span>
+<span class="error">'.$photoErr.'</span><br>
 </div>
 </div>
 
-<div class="input_field">
 <button type="submit" name="SignUp" class="btn">Sign Up
 </button>
-</div>
 </div>
 </div>
 </form>';

@@ -36,15 +36,16 @@ if(isset($_POST['submit'])){
       
     // insert company data into table
     $result=mysqli_query($mysqli,"insert into company(company_name,company_mobile,company_email) values('$company_name', '$company_mobile', '$company_email')");
-    }
+    
     // show message when company added
     echo "Company added successfully.<a href='index.php'>View Companies</a>"; 
+    }
     
 }
 ?>
 <html>
     <head>
-        <title>Add Company</title>
+    <title>Add Company</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -79,6 +80,6 @@ if(isset($_POST['submit'])){
                 </tr>
             </table>
         </form>
-</div>
-</body>
+    </div>
+    </body>
 </html>
