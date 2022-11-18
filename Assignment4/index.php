@@ -27,20 +27,23 @@ $result = mysqli_query($mysqli,"select * from company order by id desc");
   </thead>
   <tbody>
   <tr>
-  <td>
   <?php
    while($company_data= mysqli_fetch_array($result)){
       echo "<tr>";
       echo "<td>".$company_data['company_name']."</td>";
       echo "<td>".$company_data['company_mobile']."</td>";
       echo "<td>".$company_data['company_email']."</td>";
-      echo "<td><a href='edit.php?id=$company_data[id]'>Edit</a> | <a href='delete.php?id= $company_data[id]'>Delete</a></td></tr>";
+      echo "<td><a href='edit.php?id=$company_data[id]'>Edit</a> | <a href='delete.php?id= $company_data[id]' onclick='return checkdelete()'>Delete</a></td></tr>";
      }
   ?>
-  </td>
   </tr>
   </tbody>
   </table>
+  <script>
+    function checkdelete(){
+      return confirm('Are you sure want to Delete this Record');
+    }
+  </script>
   </div>
   </body>
  </html>    

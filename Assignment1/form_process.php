@@ -11,8 +11,8 @@
     } else {
       $firstname = $_POST["firstname"];
       // check if name only contains letters and whitespace
-      if (!preg_match("/^[a-zA-Z-' ]*$/",$firstname)) {
-        $firstnameErr = "Only letters and white space allowed";
+      if (!preg_match("/^[a-zA-Z-']*$/",$firstname)) {
+        $firstnameErr = "Only letters allowed";
         $error =TRUE;
         
       }
@@ -25,8 +25,8 @@
     } else {
       $lastname = $_POST["lastname"];
       // check if name only contains letters and whitespace
-      if (!preg_match("/^[a-zA-Z-' ]*$/",$lastname)) {
-        $lastnameErr = "Only letters and white space allowed";
+      if (!preg_match("/^[a-zA-Z-']*$/",$lastname)) {
+        $lastnameErr = "Only letters allowed";
         $error =TRUE;
         
       }
@@ -63,9 +63,7 @@
       $message = $_POST["message"];
     }
   }
-  
   }
-
   function test_input($data) {
   $data = trim($data);
   $data = stripslashes($data);
@@ -80,21 +78,28 @@
         echo " Hello " .$firstname.' '.$lastname;
         echo "<br>Thank You for Contacting us!";
         echo "<br>";
+
         $email = $_REQUEST['email'];
         echo "Email:".$email;
         echo"<br>";
+
         $mobileno = $_REQUEST['mobileno'];
         echo "Mobile:".$mobileno;
         echo"<br>";
-        $birthdate = $_REQUEST['birthdate'];
-      if(date('d-m-yy',strtotime($birthdate))==date('d-m-yy')){
+        
+       // if statement for birthdate
+       $birthdate = $_REQUEST['birthdate'];
+      if(date('d-m',strtotime($birthdate))==date('d-m')){
         echo "Today is your birthday " .$birthdate.PHP_EOL;
         echo "Happy Birthday $firstname $lastname";
         echo "</br>";
       }
+      else{
+        echo " Wrong date of birth";
+      }
       $message = $_REQUEST['message'];
       echo "Message:".$message;
-      $hide=1;
+      //$hide=1;
     }
   }
 }

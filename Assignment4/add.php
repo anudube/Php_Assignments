@@ -33,12 +33,16 @@ if(isset($_POST['submit'])){
         
     //include database connection file
     include_once("config.php");
-      
-    // insert company data into table
-    $result=mysqli_query($mysqli,"insert into company(company_name,company_mobile,company_email) values('$company_name', '$company_mobile', '$company_email')");
-    
-    // show message when company added
-    echo "Company added successfully.<a href='index.php'>View Companies</a>"; 
+    $query = mysqli_query($mysqli, "select * from company where company_email='$company_email'");
+        if(mysqli_num_rows($query)>0){
+          echo "Email already use";
+        } 
+        else{
+            // insert company data into table
+            $result=mysqli_query($mysqli,"insert into company(company_name,company_mobile,company_email) values('$company_name', '$company_mobile', '$company_email')");
+        }
+        // show message when company added
+        echo "Company added successfully.<a href='index.php'>View Companies</a>"; 
     }
     
 }
