@@ -1,9 +1,10 @@
 <?php 
+session_start();
 // create database connection using config file
 include_once("config.php");
 
 //fetch all company details from database
-$result = mysqli_query($mysqli,"select * from company order by id desc");
+$result = mysqli_query($mysqli,"select * from companies order by id desc");
 ?>
 <html>
   <head>
@@ -15,13 +16,15 @@ $result = mysqli_query($mysqli,"select * from company order by id desc");
   </head>  
   <body>
   <div class="container mt-3">
+    <div style="text-align:center">
   <a href="add.php">Add New Company</a><br/><br/>
+</div>
   <table class="table" width='80%' border=1>
   <thead>
   <tr>
-    <th>CompanyName</th>
-    <th>CompanyMobile</th>
-    <th>CompanyEmail</th>
+    <th>Company Name</th>
+    <th>Contact Number</th>
+    <th>Company Email</th>
     <th>Action</th>
   </tr>
   </thead>
@@ -37,6 +40,7 @@ $result = mysqli_query($mysqli,"select * from company order by id desc");
      
     }
   ?>
+ 
   </tr>
   </tbody>
   </table>
@@ -45,6 +49,9 @@ $result = mysqli_query($mysqli,"select * from company order by id desc");
       return confirm('Are you sure want to Delete this Record');
     }
   </script>
+  </div>
+  <div style="text-align:center">
+  <a href="logout.php">Logout</a>
   </div>
   </body>
  </html>    

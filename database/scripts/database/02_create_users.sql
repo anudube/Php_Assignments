@@ -1,0 +1,1 @@
+create table users (id(10));

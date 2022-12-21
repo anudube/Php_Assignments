@@ -1,35 +1,42 @@
 <?php
-$host="localhost";
-$dbusername="root";
-$pass="";
-$db="assignments";
-$mysqli= mysqli_connect($host,$dbusername,$pass,$db);
-if($_SERVER["REQUEST_METHOD"]=="POST"){
+include_once('config.php');
+$usernameErr= $passwordErr="";
+
+if(!empty($_POST)){
     $username=$_POST['username'];
-    //print_r($username);
     $password=$_POST['password'];
     $spassword= md5($password);
-    $sql_query = "select * from user where user_name='".$username."' AND password='".$spassword."' ";
-    
-    //echo $sql_query;
-    //$sql_query = "select * from user";
-    $result = mysqli_query($mysqli,$sql_query);
-    //print_r($result);
-    $row= mysqli_fetch_array($result);
-    // if(empty($row)){
-    //     echo "Empty";
-    // }
-    // else{
-    //     echo "Not Empty";
-    // }
-    // print_r($row);
-    if(isset($row['status']) ==1){
-        header("location:dashboard.php");
+    $error=FALSE;
+    if(empty($username)){
+        $usernameErr="Username is required";
+        $error=TRUE;
     }
-    else{
-        echo "Your account is not active!!";
+    if(empty($password)){
+        $passwordErr="Password should not be empty";
+        $error=TRUE;
     }
 
+    if($error!=TRUE){
+    $sql_query = "select * from users where user_name='".$username."' AND password='".$spassword."'";
+    //print_r($sql_query);die();
+    $result = mysqli_query($mysqli,$sql_query);
+    $row= mysqli_fetch_array($result);
+    //print_r(var_dump($row));die();
+
+    if(isset($row['status']) && $row['status'] ==1){
+        header("location:dashboard.php");
+    }
+    elseif(isset($row['status']) && $row['status'] ==0){
+        echo "You are not a verified User, you should contact with Admin!! ";
+    }   
+    else{
+         
+         echo "<p><center>You are not Registered User,Please Sign Up!!</center></p>";
+         
+         
+    }
+
+    }
 }
 ?>
 <html>
@@ -72,15 +79,23 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
                             <div class="form-group">
                                 <label for="username" class="text-info">Username:</label><br>
                                 <input type="text" name="username" id="username" class="form-control">
+                                <span class="error"  style="color:red"><?php echo $usernameErr ?></span></td>
                             </div>
                             <div class="form-group">
                                 <label for="password" class="text-info">Password:</label><br>
                                 <input type="password" name="password" id="password" class="form-control">
+                                <span class="error"  style="color:red"><?php echo $passwordErr ?></span></td>
                             </div>
                             <div class="form-group">
                                 
                                 <input type="submit" name="submit" class="btn btn-info btn-md" value="submit">
                             </div>
+                            <div class="form-group">
+                                
+                           <p style="font-size: 12px">Not an User!<a href='Sign_Up.php'> Sign Up</a></p>
+                            </div>
+                            
+                               
                         </form>
                     </div>
                 </div>
